@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 
 import { formatPrice, pluralize, isNewShoe } from '../../utils';
 import Spacer from '../Spacer';
+import {QUERIES} from "../../constants";
 
 const ShoeCard = ({
   slug,
@@ -34,7 +35,7 @@ const ShoeCard = ({
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
-          <Image alt="" src={imageSrc} />
+          <ImageAnimationWrapper><Image alt="" src={imageSrc} /></ImageAnimationWrapper>
           {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
           {variant === 'new-release' && (
             <NewFlag>Just released!</NewFlag>
@@ -72,13 +73,56 @@ const Link = styled.a`
 
 const Wrapper = styled.article``;
 
+const Flag = styled.div`
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  background: red;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 10px;
+  font-size: ${14 / 18}rem;
+  font-weight: var(--weight-bold);
+  color: var(--color-white);
+  border-radius: 2px;
+  transition: transform 250ms;
+  transition-delay: 200ms;
+  transform-origin: top right;
+`;
+
+const SaleFlag = styled(Flag)`
+  background-color: var(--color-primary);
+`;
+const NewFlag = styled(Flag)`
+  background-color: var(--color-secondary);
+`;
+
 const ImageWrapper = styled.div`
   position: relative;
+  @media ${QUERIES.animationsEnabled} {
+    &:hover ${Flag} {
+      transform: scale(1.5);
+    }
+  }
+`;
+
+const ImageAnimationWrapper = styled.div`
+  overflow: hidden;
+  border-radius: 16px 16px 4px 4px;
 `;
 
 const Image = styled.img`
   width: 100%;
-  border-radius: 16px 16px 4px 4px;
+  transition: transform 400ms, filter 800ms;
+  transform-origin: 50% 80%;
+  display: block;
+  @media ${QUERIES.animationsEnabled} {
+    &:hover {
+      transform: scale(1.1);
+      filter: contrast(120%);
+      transition: transform 200ms, filter 1000ms;
+    }
+  }
 `;
 
 const Row = styled.div`
@@ -104,27 +148,6 @@ const ColorInfo = styled.p`
 const SalePrice = styled.span`
   font-weight: var(--weight-medium);
   color: var(--color-primary);
-`;
-
-const Flag = styled.div`
-  position: absolute;
-  top: 12px;
-  right: -4px;
-  background: red;
-  height: 32px;
-  line-height: 32px;
-  padding: 0 10px;
-  font-size: ${14 / 18}rem;
-  font-weight: var(--weight-bold);
-  color: var(--color-white);
-  border-radius: 2px;
-`;
-
-const SaleFlag = styled(Flag)`
-  background-color: var(--color-primary);
-`;
-const NewFlag = styled(Flag)`
-  background-color: var(--color-secondary);
 `;
 
 export default ShoeCard;

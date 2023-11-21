@@ -8,4 +8,5 @@ export const QUERIES = {
   'mobileAndDown': `(max-width: ${BREAKPOINTS.mobileMax / 16}rem)`,
   'tabletAndDown': `(max-width: ${BREAKPOINTS.tabletMax / 16}rem)`,
   'laptopAndDown': `(max-width: ${BREAKPOINTS.laptopMax / 16}rem)`,
+  'animationsEnabled': '(prefers-reduced-motion: no-preference)'
 }
